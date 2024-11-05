@@ -1,0 +1,166 @@
+<html lang="en">
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>登陆/注册页面</title>
+ <style>
+     body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+     padding: 0;
+}
+   /* .a{
+            font-family: Arial, sans-serif;
+        }
+         */
+        label {
+            display: block;
+            margin-bottom: 6px;
+        }
+        .form {
+                
+                 border-radius: 5px;
+                 box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+                  padding: 20px;
+                   max-width: 400px;
+                   margin: 0 auto;
+       }
+     .container {
+             max-width: 400px;
+                margin: 0 auto;
+                display: flex;
+                flex-direction: column;
+             align-items: center;
+            justify-content: center;
+         height: 60vh;
+         background-color: rgb(175, 204, 227);
+         margin-top: 150px;
+    }
+       /* .container {
+            max-width: 400px;
+            
+			
+            padding: 20px;
+            background-color: hsl(336, 34%, 62%);
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        } */
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+            width: 95%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color:rgb(198, 165, 184);
+            color: rgb(191, 36, 64);
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+ .toggle-link {
+            text-decoration: underline;
+            text-align: center;
+            margin-top: 10px;
+            color:  red;
+            cursor: pointer;    
+        }
+ </style>
+<body>
+<div class="container">
+  <h2 align="center">登录/注册</h2>
+ <form id="loginForm">
+ <label for="loginUsername">用户名</label>
+ <input type="text" id="loginUsername" name="loginUsername" required>
+ <label for="loginPassword">密码</label>
+ <input type="password" id="loginPassword" name="loginPassword" required >
+ <input type="submit" value="登录">
+ </form>
+ <form id="signupForm" style="display:none;">
+ <label for="signupUsername">用户名</label>
+ <input type="text" id="signupUsername" name="signupUsername" required>
+ <label for="signupEmail">邮箱</label>
+ <input type="email" id="signupEmail" name="signupEmail" required>
+ <label for="signupPassword">密码</label>
+ <input type="password" id="signupPassword" name="signupPassword" required>
+<label for="confirmPassword">确认密码</label>
+ <input type="password" id="confirmPassword" name="confirmPassword" required>
+ <input type="submit" value="注册">
+</form>
+<div class="toggle-link ">还没有账号？点击这里注册</div>
+</div>    
+<script>
+        let loginform = document.getElementById('loginForm');
+        let signupForm = document.getElementById('signupForm');
+        let togglelink = document.querySelector('.toggle-link');
+
+     togglelink.addEventListener('click', () => {
+            if (loginform.style.display === 'none') {
+                loginform.style.display = 'block';
+                signupForm.style.display = 'none';
+                togglelink.textContent = '还没有账号？点击这里注册';
+            } else {
+                loginform.style.display = 'none';
+                signupForm.style.display = 'block';
+                togglelink.textContent = '已有账号？点击这里登录';
+            }
+        });
+        
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let username = document.getElementById('loginUsername').value;
+            let password = document.getElementById('loginPassword').value;
+
+            if (!username ||!password) {
+                alert('所以字段都是必填的。');
+                return;
+            }
+
+            if (username === "hlx" && password === "88888888") {
+            alert('登录成功！');
+            } else {
+            if (username !=="hlx" ) {
+            alert("用户名不正确！");
+            } 
+            if(password!=="88888888") {
+            alert("密码不正确！");
+            }
+            return false;
+            }
+        });
+
+        signupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let username = document.getElementById('signupUsername').value;
+            let email = document.getElementById('signupEmail').value;
+            let password = document.getElementById('signupPassword').value;
+            let confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                alert('请输入正确的邮箱地址。');
+                return;
+            }
+
+            if (password!== confirmpassword) {
+                alert('两次输入的密码不一致。');
+                return;
+            } 
+            
+            if (!username ||!email ||!password ||!confirmPassword) {
+                alert('所有字段都是必填的。');
+                return;
+            }
+
+            alert('注册成功！');
+        });
+ </script>
+</body>
+</html>
+
