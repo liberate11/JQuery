@@ -1,4 +1,5 @@
- <style >
+
+    <style >
       .title{
         display: flex;
         color: red;
@@ -27,33 +28,34 @@
     </style>
   <h2 id="test">Blog Management System</h2>
   <div id="list">
-      <div class="list-item">
-          <span class="title">ID</span>
-          <span class="title">userId</span>
-          <span class="title">body</span>
-          <span class="title">title</span>
-      </div>
+    <div class="list-item">
+      <span class="title">ID</span>
+      <span class="title">userId</span>
+      <span class="title">body</span>
+      <span class="title">title</span>
+    </div>
   </div>
-  <script src="jquery-3.6.0.min.js"></script>
+  <script src="jquery-3.7.1.min.js"></script>
   <script>
-      $.ajax({
-          url:'http://jsonplaceholder.typicode.com/posts',
-          type:'GET',
-          success:function(response) {
-              console.log(response);
-              let list = response;
-              list.forEach(item => {
-                  console.log(item)
-                  $('#list').append("\<div class=\"list-item\"\>\<span class=\"title\">" + item.id +
-                      "\</span>\<span class=\"title\">" + item.userId + "\</span>\<span class=\"title\">" + item.body +
-                      "\</span\>\<span class=\"title\"\> "+ item.title +"\</span>\</div\>")
-              })
-          },
-          error:function(xhr,status,error) {
-              console.log(error);
-          }
+    $.ajax({
+      url:'http://jsonplaceholder.typicode.com/posts',
+      type:'GET',
+      success:function(response) {
+        console.log(response);
+        let list = response;
+        list.forEach(item => {
+          console.log(item)
+          $('#list').append("\<div class=\"list-item\"\>\<span class=\"title\">" + item.id +
+                  "\</span>\<span class=\"title\">" + item.userId + "\</span>\<span class=\"title\">" + item.body +
+                  "\</span\>\<span class=\"title\"\> "+ item.title +"\</span>\</div\>")
+        })
+      },
+      error:function(xhr,status,error) {
+        console.log(error);
+      }
   
-      });
+    });
   
   </script>
+  
   
