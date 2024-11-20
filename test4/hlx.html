@@ -1,0 +1,250 @@
+<html lang="en">
+    <head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>首页</title>
+</head>
+    <style>
+     .head{
+        border: 2px solid #ccc;
+        display: flex;
+        align-items: center;
+         justify-content: center;
+         height:7%;
+         background-image: linear-gradient(30deg,pink,white);
+         color: white;
+         position: relative;
+         font-size: 28px;
+         box-sizing: border-box;
+  }
+     .userInfo{
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: block;
+        background-color:rgb(144, 221, 238);
+        right:10;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 15px;
+     }
+     .userInfo:hover .user_menu{
+        display: block;
+     }
+     .user_menu{
+        height: 80px;
+        width: 60px;
+        display:none;
+        background-color: rgb(255, 209, 205);
+        top:52px;
+        position: absolute;
+        font-size: 10px !important;
+     }
+     .container{
+        background-image: linear-gradient(30deg,pink,white);
+        height:93%;
+        display: flex;
+     }
+     .menu{
+        background-image: linear-gradient(30deg,pink,white);
+        flex: 3;
+     }
+     .contnet{
+        background-image: linear-gradient(30deg,pink,white);
+        flex: 22;
+     }
+     h2{
+         display: flex; 
+         align-items: center;
+        justify-content: center; 
+        color:black;
+        border: 2px solid white;
+        box-shadow: 2px 2px 2px 2px inset;
+       border-radius: 10px 10px 10px 10px;
+     }
+     .form-group {
+            width:150px;
+            height: 80px;
+            margin-left: 20px;
+            font-size: 20px;
+            font-family: Arial, sans-serif;
+            margin-top: 20px;
+        }
+        #b{
+            width:150px;
+            height:80px;
+            margin-right:60px;
+            font-size: 20px;
+            font-family: Arial, sans-serif;
+            float:right;
+        }
+         table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        } 
+        .one{
+            margin-top: 230px;
+        }
+        .form-group button {
+            margin-top: 10px;
+            background-color: #af9e4c;
+            color: white;
+            border: none;
+            width: 80px;
+            height:40px;
+            border-radius: 10px 10px 10px 10px;
+        }
+        #b button {
+            margin-top: 10px;
+            background-color: #af9e4c;
+            color: white;
+            border: none;
+            width: 80px;
+            height:40px;
+            border-radius: 10px 10px 10px 10px;
+        }
+        ul{
+            line-height:40px;
+        }
+    </style>
+ <body>
+  <div class="head">
+    学生信息管理系统
+    <div class="userInfo">
+        허리샤
+        <div class="user_menu">
+            <p>个人信息</p>
+            <p>修改密码</p>
+            <p>退出登录</p>
+        </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="menu">
+        <ul>
+            <li>班级管理
+                <ul>
+                <li>班级制度</li>
+                <li>班级教学</li>
+                <li>班级活动</li>
+            </ul>
+            </li>
+            <li>学生管理
+                <ul>
+                    <li>学生信息</li>
+                    <li>学生心理</li>
+                </ul>
+            </li>
+            <li>成绩管理
+                <ul>
+                    <li>成绩单</li>
+                </ul>
+            </li>
+            <li>课程管理
+                <ul>
+                <li>班级课表</li>
+              </ul>
+            </li>
+            <li>用户管理
+                <ul>
+                    <li>修改用户名</li>
+                    <li>退出登录</li>
+                </ul>
+            </li>
+                <li>账号管理
+                    <ul>
+                    <li>修改密码</li>
+                    <li>切换账号</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="contnet">
+        <h2>添加学生信息/查询学生</h2>
+        <form action="/login" method="post" class="form-group">
+            <label for="student-id">学号:</label>
+            <input type="text" id="student-id" name="student-id" required>
+            <label for="name">姓名:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="sex">性别:</label>
+            <input type="radio" id="sex" name="sex" required/>男
+            <input type="radio" id="sex" name="sex" required/>女
+            <label for="age">年龄:</label>
+            <input type="text" id="age" name="age" required>
+            <label for="grade">年级:</label>
+            <input type="text" id="grade" name="grade" required>
+            <button type="submit">添加学生</button>
+        </form>
+        <form action="/login" method="post" id="b">
+            <label for="student-id">学号:</label>
+            <input type="text" id="student-id" name="student-id" required>
+            <label for="name">姓名:</label>
+            <input type="text" id="name" name="name" required>
+            <button type="submit">查询</button>
+        </form>
+       <div class="one">
+        <h2>学生信息列表</h2>
+        <table> 
+            <thead>
+                <tr>
+                    <th>学号</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>年龄</th>
+                    <th>年级</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>001</td>
+                    <td>张三</td>
+                    <td>男</td>
+                    <td>20</td>
+                    <td>大一</td>
+                    <td><button onclick="editStudent(this)">编辑</button> <button onclick="deleteStudent(this)">删除</button></td>
+                </tr>
+            </tbody>
+        </table>
+     </div>
+   </div>
+  
+<script src="jquery-3.7.1.min.js"></script>
+<script>
+  $(function(){
+  $("li:has(ul)").click(function(e){
+  if(this==e.target){
+  if($(this).children().is(":hidden")){
+  $(this).css("list-style-image","url(minus.gif)")
+    .children().show();
+   }else{
+   $(this).css("list-style-image","url(plus.gif)")
+        .children().hide();
+   }
+}
+       return false;
+  }).css("cursor","pointer").click();
+   $("li:not(:has(ul))").css({
+       "cursor":"default",
+       "list-style-image":"none"
+   });
+  });
+    function editStudent(button) {
+        alert('编辑功能尚未实现');
+    }
+    function deleteStudent(button) {
+        alert('删除功能尚未实现');
+    }
+</script>
+ </body>
+</html>
