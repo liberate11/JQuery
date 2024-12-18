@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>医院信息管理系统</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js"></script>
+  <style>
+    /* 全局样式 */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    /* 导航栏样式 */
+    nav {
+      background-color: #333;
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+
+    nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li {
+      display: inline-block;
+      margin-right: 20px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+    }
+
+    /* 页面容器样式，用于切换显示不同页面内容 */
+    #pageContainer {
+      padding: 20px;
+    }
+
+    /* 主体内容区域样式 */
+    main {
+      padding: 20px;
+    }
+
+    /* 页脚样式 */
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    form {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"] {
+      width: 50%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    input[type="submit"] {
+      background-color: #333;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+    }
+
+.back-button {
+      background-color: #333;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    /* 搜索表单样式 */
+    #searchPatientForm {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    #searchPatientForm label {
+      margin-right: 10px;
+    }
+
+.page {
+      display: none;
+      background-color: white;
+      border-radius: 10px;
+      padding: 20px;
+    }
+
+    /* 首页样式修改 */
+    #index {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #index h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+
+    #index p {
+      font-size: 18px;
+      color: #555;
+      width: 60%;
+      line-height: 1.5;
+    }
+
+    #index img {
+      width: 50%;
+      margin-top: 30px;
+      border-radius: 10px;
+    }
+
+    /* 登录页面样式修改 */
+    #login {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #login h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    #login form {
+      width: 300px;
+    }
+
+    #login label {
+      font-weight: bold;
+    }
+
+    #login input[type="text"],
+    #login input[type="password"] {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 12px;
+      margin-bottom: 20px;
+    }
+
+    #login input[type="submit"] {
+      width: 100%;
+      padding: 12px;
+      border-radius: 5px;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    #login input[type="submit"]:hover {
+      background-color: #555;
+    }
+
+    #login.back-button {
+      margin-top: 20px;
+    }
+
+   .box {
+      float: left;
+      width: 48%; /* 调整为合适的宽度，使两个表单能在一行显示 */
+      margin-right: 2%; /* 两个表单之间的间距 */
+      margin-top: 50px;
+    }
+
+    #editPatientForm {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+ <!-- 导航栏 -->
+  <nav>
+    <ul>
+      <li><a href="#" onclick="showPage('index')">首页</a></li>
+      <li><a href="#" onclick="showPage('login')">登录</a></li>
+      <li><a href="#" onclick="showPage('patientManagement')">患者管理</a></li>
+      <li><a href="#" onclick="showPage('departmentInfo')">科室信息</a></li>
+      <li><a href="#" onclick="showPage('systemSettings')">系统设置</a></li>
+    </ul>
+  </nav>
+<!--页面容器，用于切换显示不同功能页面 -->
+  <div id="pageContainer"> 
+    <div id="index" class="page">
+      <main>
+        <h1>欢迎使用医院信息管理系统</h1>
+        <p>本系统旨在全方位助力医院进行高效的信息管理，提升医疗服务质量与运营效率，为医护人员和患者提供便利。通过智能化的患者档案管理、详细的科室信息展示以及灵活的系统设置等功能，确保医院各项工作有序进行。无论是医生对患者病情的精准把握，还是医院管理层对整体运营的统筹规划，本系统都将成为有力的助手。</p>
+      </main>
+    </div>
+
+    <!-- 登录页面内容 -->
+    <div id="login" class="page" style="display: none;">
+      <main>
+        <h1>登录</h1>
+        <form id="loginForm">
+          <label for="username">用户名：</label><input type="text" id="username" required><br>
+          <label for="password">密码：</label><input type="password" id="password" required><br>
+          <input type="submit" value="登录" onclick="return validateLogin()">
+        </form>
+        <button class="back-button" onclick="showPage('index')">返回</button>
+      </main>
+    </div>
+
+    <!-- 患者管理页面内容 -->
+    <div id="patientManagement" class="page" style="display: none;">
+      <main>
+        <h1>患者管理</h1>
+        <button class="back-button" onclick="showPage('index')">返回</button>
+        <!-- 搜索患者表单 -->
+        <form id="searchPatientForm">
+          <label for="searchKeyword">搜索患者：</label><input type="text" id="searchKeyword" placeholder="输入患者姓名或关键词"><br>
+          <input type="submit" value="搜索" onclick="return searchPatients()">
+        </form>
+        <!-- 患者信息列表 -->
+        <table id="patientTable" border="1">
+          <thead>
+            <tr>
+              <th>患者 ID</th>
+              <th>患者姓名</th>
+              <th>年龄</th>
+              <th>性别</th>
+              <th>科室</th>
+              <th>病情描述</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="patientTableBody">
+            <!-- 初始示例数据，后续可动态加载 -->
+            <tr>
+              <td>1</td>
+              <td>张三</td>
+              <td>35</td>
+              <td>男</td>
+              <td>内科</td>
+              <td>感冒发烧</td>
+              <td>
+                <button onclick="editPatient(this)">编辑</button>
+                <button onclick="deletePatient(this)">删除</button>
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>李四</td>
+              <td>42</td>
+              <td>女</td>
+              <td>外科</td>
+              <td>骨折</td>
+              <td>
+                <button onclick="editPatient(this)">编辑</button>
+                <button onclick="deletePatient(this)">删除</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="box">
+          <!-- 新增患者表单 -->
+           <form id="addPatientForm">
+          <h2>新增患者</h2>
+            <label for="newId">患者 ID：</label><input type="text" id="newId" required><br>
+            <label for="newName">患者姓名：</label><input type="text" id="newName" required><br>
+            <label for="newAge">年龄：</label><input type="text" id="newAge" required><br>
+            <label for="newGender">性别：</label><input type="text" id="newGender" required><br>
+            <label for="newDepartment">科室：</label><input type="text" id="newDepartment" required><br>
+            <label for="newCondition">病情描述：</label><input type="text" id="newCondition" required><br>
+            <input type="submit" value="新增患者" onclick="return addPatient()">
+          </form>
+        </div>
+
+        <div class="box">
+          <!-- 编辑患者表单（初始隐藏） -->
+            <form id="editPatientForm">
+          <h2>编辑患者</h2>
+            <input type="hidden" id="editId" />
+            <label for="editName">患者姓名：</label><input type="text" id="editName" required><br>
+            <label for="editAge">年龄：</label><input type="text" id="editAge" required><br>
+            <label for="editGender">性别：</label><input type="text" id="editGender" required><br>
+            <label for="editDepartment">科室：</label><input type="text" id="editDepartment" required><br>
+            <label for="editCondition">病情描述：</label><input type="text" id="editCondition" required><br>
+            <input type="submit" value="保存编辑" onclick="return saveEdit()">
+          </form>
+        </div>
+      </main>
+    </div>
+
+    <!-- 科室信息页面内容 -->
+    <div id="departmentInfo" class="page" style="display: none;">
+      <main>
+        <h1>科室信息</h1>
+        <button class="back-button" onclick="showPage('index')">返回</button>
+        <ul>
+          <li>
+            <h3>内科</h3>
+            <p>主要负责诊治各类内科疾病，涵盖心血管疾病、呼吸系统疾病、消化系统疾病等，拥有专业的医疗团队和先进的诊疗设备，致力于为患者提供全面、精准的诊断与治疗服务。</p>
+          </li>
+          <li>
+            <h3>外科</h3>
+            <p>专注于开展各类外科手术及创伤治疗等相关业务，包括普外科手术、骨科手术、神经外科手术等，具备完善的手术设施和经验丰富的外科医生，保障手术的高质量与安全性。</p>
+          </li>
+          <!-- 可以继续添加更多科室的详细介绍 -->
+        </ul>
+      </main>
+    </div>
+
+    <!-- 系统设置页面内容 -->
+<div id="systemSettings" class="page" style="display: none;">
+    <main>
+      <h1>系统设置</h1>
+      <p>当前登录用户: <span id="currentUsernameDisplay"></span></p>
+      <button class="back-button" onclick="showPage('index')">返回</button>
+      <!-- 修改密码表单 -->
+      <form id="changePasswordForm">
+        <label for="oldPassword">旧密码：</label><input type="password" id="oldPassword" required><br>
+        <label for="newPassword">新密码：</label><input type="password" id="newPassword" required><br>
+        <label for="confirmPassword">确认新密码：</label><input type="password" id="confirmPassword" required><br>
+        <input type="submit" value="修改密码" onclick="return changePassword()">
+      </form>
+    </main>
+  </div>
+  <script>
+    //显示指定页面，隐藏其他页面
+function showPage(pageId) {
+const pages = document.querySelectorAll('.page');
+pages.forEach(page => {
+    page.style.display = 'none';
+});
+document.getElementById(pageId).style.display = 'block';
+// 除了首页，其他页面显示时显示返回按钮
+const backButton = document.querySelector('.back-button');
+if (pageId === 'index') {
+    backButton.style.display = 'none';
+} else {
+    backButton.style.display = 'block';
+}
+}
+
+// 简单的登录验证函数（仅示例，实际需和后端交互）
+function validateLogin() {
+var username = document.getElementById('username').value;
+var password = document.getElementById('password').value;
+if (username === "" || password === "") {
+    alert("用户名和密码不能为空，请填写完整！");
+    return false;
+}
+// 这里只是简单模拟，实际应该和后端交互验证
+if (username === "admin" && password === "123456") {
+    alert("登录成功！");
+    showPage('index');
+    return false;
+} else {
+    alert("用户名或密码错误，请重新输入");
+    return false;
+}
+}
+// 当页面加载完成后，设置当前用户名显示并默认显示首页
+window.onload = function () {
+  // 假设这里有获取当前登录用户名的函数 getCurrentUsername
+  const currentUsername = getCurrentUsername(); 
+  document.getElementById('currentUsernameDisplay').innerHTML = currentUsername;
+  showPage('index');
+};
+
+// 修改密码函数
+function changePassword() {
+  var oldPassword = document.getElementById('oldPassword').value;
+  var newPassword = document.getElementById('newPassword').value;
+  var confirmPassword = document.getElementById('confirmPassword').value;
+  if (oldPassword === "" || newPassword === "" || confirmPassword === "") {
+    alert("密码信息不能为空，请填写完整！");
+    return false;
+  }
+  if (newPassword!== confirmPassword) {
+    alert("新密码与确认密码不一致，请重新输入！");
+    return false;
+  }
+  // 这里需要添加与后端交互验证旧密码是否正确并更新密码的逻辑
+  // 假设这里有验证旧密码的函数 validateOldPassword 和更新密码的函数 updatePassword
+  if (!validateOldPassword(oldPassword)) {
+    alert("旧密码错误，请重新输入");
+    return false;
+  }
+  if (updatePassword(newPassword)) {
+    alert("密码修改成功，请重新登录");
+    // 这里可以添加清除当前登录状态的逻辑，例如清除存储用户名和密码的本地缓存或 cookie
+    // 然后跳转到登录页面
+    showPage('login');
+    return false;
+  } else {
+    alert("密码修改失败，请稍后重试");
+    return false;
+  }
+}
+// 新增患者函数（仅前端交互示例，实际需和后端交互添加数据）
+function addPatient() {
+var newId = document.getElementById('newId').value;
+var newName = document.getElementById('newName').value;
+var newAge = document.getElementById('newAge').value;
+var newGender = document.getElementById('newGender').value;
+var newDepartment = document.getElementById('newDepartment').value;
+var newCondition = document.getElementById('newCondition').value;
+if (newId === "" || newName === "" || newAge === "" || newGender === "" || newDepartment === "" || newCondition === "") {
+    alert("请填写完整患者信息！");
+    return false;
+}
+// 获取表格体元素
+const tableBody = document.getElementById('patientTableBody');
+// 创建新行
+const newRow = document.createElement('tr');
+newRow.innerHTML = `
+    <td>${newId}</td>
+    <td>${newName}</td>
+    <td>${newAge}</td>
+    <td>${newGender}</td>
+    <td>${newDepartment}</td>
+    <td>${newCondition}</td>
+    <td>
+        <button onclick="editPatient(this)">编辑</button>
+        <button onclick="deletePatient(this)">删除</button>
+    </td>
+`;
+tableBody.appendChild(newRow);
+// 清空新增表单
+document.getElementById('addPatientForm').reset();
+return false;
+}
+
+// 编辑患者，填充编辑表单（仅前端交互示例，实际需结合后端获取原始数据等）
+function editPatient(button) {
+const row = button.parentNode.parentNode;
+const cells = row.getElementsByTagName('td');
+document.getElementById('editId').value = cells[0].innerHTML;
+document.getElementById('editName').value = cells[1].innerHTML;
+document.getElementById('editAge').value = cells[2].innerHTML;
+document.getElementById('editGender').value = cells[3].innerHTML;
+document.getElementById('editDepartment').value = cells[4].innerHTML;
+document.getElementById('editCondition').value = cells[5].innerHTML;
+document.getElementById('editPatientForm').style.display = 'block';
+}
+
+// 保存编辑患者信息（仅前端交互示例，实际需和后端交互更新数据）
+function saveEdit() {
+var editId = document.getElementById('editId').value;
+var editName = document.getElementById('editName').value;
+var editAge = document.getElementById('editAge').value;
+var editGender = document.getElementById('editGender').value;
+var editDepartment = document.getElementById('editDepartment').value;
+var editCondition = document.getElementById('editCondition').value;
+if (editName === "" || editAge === "" || editGender === "" || editDepartment === "" || editCondition === "") {
+    alert("请填写完整编辑后的患者信息！");
+    return false;
+}
+// 获取表格元素
+const table = document.getElementById('patientTable');
+const row = table.rows[editId];
+const cells = row.getElementsByTagName('td');
+cells[1].innerHTML = editName;
+cells[2].innerHTML = editAge;
+cells[3].innerHTML = editGender;
+cells[4].innerHTML = editDepartment;
+cells[5].innerHTML = editCondition;
+document.getElementById('editPatientForm').style.display = 'none';
+return false;
+}
+
+// 删除患者函数（仅前端交互示例，实际需和后端交互删除数据）
+function deletePatient(button) {
+const row = button.parentNode.parentNode;
+const table = document.getElementById('patientTable');
+table.deleteRow(row.rowIndex);
+}
+
+// 搜索患者函数（仅前端搜索过滤示例，实际需和后端交互查询数据）
+function searchPatients() {
+const keyword = document.getElementById('searchKeyword').value.toLowerCase();
+const tableRows = document.querySelectorAll('#patientTableBody tr');
+tableRows.forEach(row => {
+    const patientName = row.cells[1].innerHTML.toLowerCase();
+    if (patientName.includes(keyword)) {
+        row.style.display = 'table-row';
+    } else {
+        row.style.display = 'none';
+    }
+});
+return false;
+}
+
+// 当页面加载完成后，默认显示首页
+window.onload = function () {
+showPage('index');
+};
+</script>
+</body>
+</html>
