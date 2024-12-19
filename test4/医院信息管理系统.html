@@ -2,319 +2,391 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>医院信息管理系统</title>
-  <link rel="stylesheet" href="styles.css">
-  <script src="script.js"></script>
-  <style>
-    /* 全局样式 */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>医院信息管理系统</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js"></script>
+    <style>
+        /* 全局样式 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
 
-    /* 导航栏样式 */
-    nav {
-      background-color: #333;
-      color: white;
-      padding: 10px;
-      text-align: center;
-    }
+        /* 导航栏样式 */
+        nav {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
 
-    nav ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-    }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
 
-    nav ul li {
-      display: inline-block;
-      margin-right: 20px;
-    }
+        nav ul li {
+            display: inline-block;
+            margin-right: 20px;
+        }
 
-    nav ul li a {
-      color: white;
-      text-decoration: none;
-    }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
 
-    /* 页面容器样式，用于切换显示不同页面内容 */
-    #pageContainer {
-      padding: 20px;
-    }
+        /* 页面容器样式，用于切换显示不同页面内容 */
+        #pageContainer {
+            padding: 20px;
+        }
 
-    /* 主体内容区域样式 */
-    main {
-      padding: 20px;
-    }
+        /* 主体内容区域样式 */
+        main {
+            padding: 20px;
+        }
 
-    /* 页脚样式 */
-    footer {
-      background-color: #333;
-      color: white;
-      text-align: center;
-      padding: 10px;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-    }
+        /* 页脚样式 */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
 
-    form {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-      margin-bottom: 20px;
-    }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
 
-    label {
-      display: block;
-      margin-bottom: 5px;
-    }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
 
-    input[type="text"] {
-      width: 50%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 3px;
-    }
+        input[type="text"] {
+            width: 50%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
 
-    input[type="submit"] {
-      background-color: #333;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 3px;
-      cursor: pointer;
-    }
+        input[type="submit"] {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
 
-    th,
-    td {
-      border: 1px solid #ccc;
-      padding: 10px;
-      text-align: left;
-    }
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
 
-.back-button {
-      background-color: #333;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 3px;
-      cursor: pointer;
-      margin-bottom: 20px;
-      display: none;
-    }
+      .back-button {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: none;
+        }
 
-    /* 搜索表单样式 */
-    #searchPatientForm {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-    }
+        /* 搜索表单样式 */
+        #searchPatientForm {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
 
-    #searchPatientForm label {
-      margin-right: 10px;
-    }
+        #searchPatientForm label {
+            margin-right: 10px;
+        }
 
-.page {
-      display: none;
-      background-color: white;
-      border-radius: 10px;
-      padding: 20px;
-    }
+      .page {
+            display: none;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+        }
 
-    /* 首页样式修改 */
-    #index {
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
+        /* 首页样式修改 */
+        #index {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
 
-    #index h1 {
-      font-size: 36px;
-      margin-bottom: 20px;
-    }
+        #index h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
 
-    #index p {
-      font-size: 18px;
-      color: #555;
-      width: 60%;
-      line-height: 1.5;
-    }
+        #index p {
+            font-size: 18px;
+            color: #555;
+            width: 60%;
+            line-height: 1.5;
+        }
 
-    #index img {
-      width: 50%;
-      margin-top: 30px;
-      border-radius: 10px;
-    }
+        #index img {
+            width: 50%;
+            margin-top: 30px;
+            border-radius: 10px;
+        }
 
-    /* 登录页面样式修改 */
-    #login {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
+        /* 登录页面样式修改 */
+        #login {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
 
-    #login h1 {
-      font-size: 28px;
-      margin-bottom: 20px;
-    }
+        #login h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
 
-    #login form {
-      width: 300px;
-    }
+        #login form {
+            width: 300px;
+        }
 
-    #login label {
-      font-weight: bold;
-    }
+        #login label {
+            font-weight: bold;
+        }
 
-    #login input[type="text"],
-    #login input[type="password"] {
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      padding: 12px;
-      margin-bottom: 20px;
-    }
+        #login input[type="text"],
+        #login input[type="password"] {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 12px;
+            margin-bottom: 20px;
+        }
 
-    #login input[type="submit"] {
-      width: 100%;
-      padding: 12px;
-      border-radius: 5px;
-      font-size: 16px;
-      transition: background-color 0.3s ease;
-    }
+        #login input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
 
-    #login input[type="submit"]:hover {
-      background-color: #555;
-    }
+        #login input[type="submit"]:hover {
+            background-color: #555;
+        }
 
-    #login.back-button {
-      margin-top: 20px;
-    }
+        #login.back-button {
+            margin-top: 20px;
+        }
 
-   .box {
-      float: left;
-      width: 48%; /* 调整为合适的宽度，使两个表单能在一行显示 */
-      margin-right: 2%; /* 两个表单之间的间距 */
-      margin-top: 50px;
-    }
+      .box {
+            float: left;
+            width: 48%;
+            /* 调整为合适的宽度，使两个表单能在一行显示 */
+            margin-right: 2%;
+            /* 两个表单之间的间距 */
+            margin-top: 50px;
+        }
 
-    #editPatientForm {
-      display: none;
-    }
-  </style>
+        #editPatientForm {
+            display: none;
+        }
+
+        /* 多级菜单整体样式 */
+      .multi-level-menu {
+            width: 80%;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        /* 一级菜单样式 */
+      .multi-level-menu ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+      .multi-level-menu ul li {
+            position: relative;
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+      .multi-level-menu ul li a {
+            color: #333;
+            text-decoration: none;
+            padding: 5px 10px;
+        }
+
+        /* 二级菜单默认隐藏 */
+      .multi-level-menu ul li ul {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+            padding: 5px 0;
+        }
+
+        /* 鼠标悬停一级菜单显示二级菜单 */
+      .multi-level-menu ul li:hover ul {
+            display: block;
+        }
+
+      .multi-level-menu ul li ul li {
+            display: block;
+            margin: 0;
+        }
+
+      .multi-level-menu ul li ul li a {
+            display: block;
+            padding: 5px 15px;
+        }
+    </style>
 </head>
 
 <body>
- <!-- 导航栏 -->
-  <nav>
-    <ul>
-      <li><a href="#" onclick="showPage('index')">首页</a></li>
-      <li><a href="#" onclick="showPage('login')">登录</a></li>
-      <li><a href="#" onclick="showPage('patientManagement')">患者管理</a></li>
-      <li><a href="#" onclick="showPage('departmentInfo')">科室信息</a></li>
-      <li><a href="#" onclick="showPage('systemSettings')">系统设置</a></li>
-    </ul>
-  </nav>
-<!--页面容器，用于切换显示不同功能页面 -->
-  <div id="pageContainer"> 
-    <div id="index" class="page">
-      <main>
-        <h1>欢迎使用医院信息管理系统</h1>
-        <p>本系统旨在全方位助力医院进行高效的信息管理，提升医疗服务质量与运营效率，为医护人员和患者提供便利。通过智能化的患者档案管理、详细的科室信息展示以及灵活的系统设置等功能，确保医院各项工作有序进行。无论是医生对患者病情的精准把握，还是医院管理层对整体运营的统筹规划，本系统都将成为有力的助手。</p>
-      </main>
-    </div>
-
-    <!-- 登录页面内容 -->
-    <div id="login" class="page" style="display: none;">
-      <main>
-        <h1>登录</h1>
-        <form id="loginForm">
-          <label for="username">用户名：</label><input type="text" id="username" required><br>
-          <label for="password">密码：</label><input type="password" id="password" required><br>
-          <input type="submit" value="登录" onclick="return validateLogin()">
-        </form>
-        <button class="back-button" onclick="showPage('index')">返回</button>
-      </main>
-    </div>
-
-    <!-- 患者管理页面内容 -->
-    <div id="patientManagement" class="page" style="display: none;">
-      <main>
-        <h1>患者管理</h1>
-        <button class="back-button" onclick="showPage('index')">返回</button>
-        <!-- 搜索患者表单 -->
-        <form id="searchPatientForm">
-          <label for="searchKeyword">搜索患者：</label><input type="text" id="searchKeyword" placeholder="输入患者姓名或关键词"><br>
-          <input type="submit" value="搜索" onclick="return searchPatients()">
-        </form>
-        <!-- 患者信息列表 -->
-        <table id="patientTable" border="1">
-          <thead>
-            <tr>
-              <th>患者 ID</th>
-              <th>患者姓名</th>
-              <th>年龄</th>
-              <th>性别</th>
-              <th>科室</th>
-              <th>病情描述</th>
-              <th>操作</th>
-            </tr>
-          </thead>
-          <tbody id="patientTableBody">
-            <!-- 初始示例数据，后续可动态加载 -->
-            <tr>
-              <td>1</td>
-              <td>张三</td>
-              <td>35</td>
-              <td>男</td>
-              <td>内科</td>
-              <td>感冒发烧</td>
-              <td>
-                <button onclick="editPatient(this)">编辑</button>
-                <button onclick="deletePatient(this)">删除</button>
-              </td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>李四</td>
-              <td>42</td>
-              <td>女</td>
-              <td>外科</td>
-              <td>骨折</td>
-              <td>
-                <button onclick="editPatient(this)">编辑</button>
-                <button onclick="deletePatient(this)">删除</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div class="box">
-          <!-- 新增患者表单 -->
-           <form id="addPatientForm">
-          <h2>新增患者</h2>
-            <label for="newId">患者 ID：</label><input type="text" id="newId" required><br>
-            <label for="newName">患者姓名：</label><input type="text" id="newName" required><br>
-            <label for="newAge">年龄：</label><input type="text" id="newAge" required><br>
-            <label for="newGender">性别：</label><input type="text" id="newGender" required><br>
-            <label for="newDepartment">科室：</label><input type="text" id="newDepartment" required><br>
-            <label for="newCondition">病情描述：</label><input type="text" id="newCondition" required><br>
-            <input type="submit" value="新增患者" onclick="return addPatient()">
-          </form>
+    <!-- 导航栏 -->
+    <nav>
+        <ul>
+            <li><a href="#" onclick="showPage('index')">首页</a></li>
+            <li><a href="#" onclick="showPage('patientManagement')">患者管理</a></li>
+            <li><a href="#" onclick="showPage('departmentInfo')">科室信息</a></li>
+            <li><a href="#" onclick="showPage('systemSettings')">系统设置</a></li>
+        </ul>
+    </nav>
+    页面容器，用于切换显示不同功能页面
+    <div id="pageContainer">
+        <div id="index" class="page">
+            <main>
+                <h1>欢迎使用医院信息管理系统</h1>
+                <p>本系统旨在全方位助力医院进行高效的信息管理，提升医疗服务质量与运营效率，为医护人员和患者提供便利。通过智能化的患者档案管理、详细的科室信息展示以及灵活的系统设置等功能，确保医院各项工作有序进行。无论是医生对患者病情的精准把握，还是医院管理层对整体运营的统筹规划，本系统都将成为有力的助手。</p>
+                <div class="multi-level-menu">
+                    <ul>
+                        <li>
+                            <a href="#">医疗服务</a>
+                            <ul>
+                                <li><a href="#">门诊挂号</a></li>
+                                <li><a href="#">住院安排</a></li>
+                                <li><a href="#">检查预约</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#">信息查询</a>
+                            <ul>
+                                <li><a href="#">患者病历查询</a></li>
+                                <li><a href="#">科室排班查询</a></li>
+                                <li><a href="#">费用明细查询</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </main>
         </div>
+<!--页面容器，用于切换显示不同功能页面-->
+        
+        <div id="login" class="page" style="display: none;">
+            <main>
+                <h1>登录</h1>
+                <form id="loginForm">
+                    <label for="username">用户名：</label><input type="text" id="username" required><br>
+                    <label for="password">密码：</label><input type="password" id="password" required><br>
+                    <input type="submit" value="登录" onclick="return validateLogin()">
+                </form>
+                <button class="back-button" onclick="showPage('index')">返回</button>
+            </main>
+        </div>
+
+        <!-- 患者管理页面内容 -->
+        <div id="patientManagement" class="page" style="display: none;">
+            <main>
+                <h1>患者管理</h1>
+                <button class="back-button" onclick="showPage('index')">返回</button>
+                <!-- 搜索患者表单 -->
+                <form id="searchPatientForm">
+                    <label for="searchKeyword">搜索患者：</label><input type="text" id="searchKeyword" placeholder="输入患者姓名或关键词"><br>
+                    <input type="submit" value="搜索" onclick="return searchPatients()">
+                </form>
+                <!-- 患者信息列表 -->
+                <table id="patientTable" border="1">
+                    <thead>
+                        <tr>
+                            <th>患者 ID</th>
+                            <th>患者姓名</th>
+                            <th>年龄</th>
+                            <th>性别</th>
+                            <th>科室</th>
+                            <th>病情描述</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="patientTableBody">
+                        <!-- 初始示例数据，后续可动态加载 -->
+                        <tr>
+                            <td>1</td>
+                            <td>张三</td>
+                            <td>35</td>
+                            <td>男</td>
+                            <td>内科</td>
+                            <td>感冒发烧</td>
+                            <td>
+                                <button onclick="editPatient(this)">编辑</button>
+                                <button onclick="deletePatient(this)">删除</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>李四</td>
+                            <td>42</td>
+                            <td>女</td>
+                            <td>外科</td>
+                            <td>骨折</td>
+                            <td>
+                                <button onclick="editPatient(this)">编辑</button>
+                                <button onclick="deletePatient(this)">删除</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="box">
+                    <!-- 新增患者表单 -->
+                    <form id="addPatientForm">
+                        <h2>新增患者</h2>
+                        <label for="newId">患者 ID：</label><input type="text" id="newId" required><br>
+                        <label for="newName">患者姓名：</label><input type="text" id="newName" required><br>
+                        <label for="newAge">年龄：</label><input type="text" id="newAge" required><br>
+                        <label for="newGender">性别：</label><input type="text" id="newGender" required><br>
+                        <label for="newDepartment">科室：</label><input type="text" id="newDepartment" required><br>
+                        <label for="newCondition">病情描述：</label><input type="text" id="newCondition" required><br>
+                        <input type="submit" value="新增患者" onclick="return addPatient()">
+                    </form>
+                </div>
 
         <div class="box">
           <!-- 编辑患者表单（初始隐藏） -->
