@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>奖金收入记录</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th,
+        table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        h3 {
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-image: linear-gradient(90deg, pink, white);
+            border: burlywood;
+            box-shadow: 5px 5px 5px #888888 inset;
+        }
+
+        .btn-secondary:hover {
+            color: white;
+            background-color: black;
+        }
+
+        .edit-btn {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+    </style>
+        <script src="jquery-3.7.1.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <button type="button" class="btn btn-dark" onclick="window.location.href='首页.html'">返回首页</button>
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addModal">
+        <i class="bi bi-plus-lg"></i> 新增奖金收入
+    </button>
+
+    <div class="container mt-3">
+        <div class="card">
+            <div class="card-header">
+                <h3>奖金收入记录</h3>
+            </div>
+            <div class="card-body">
+                <h4>奖金收入说明</h4>
+                <p>奖金收入通常是公司根据员工的工作表现、项目成果或公司业绩等因素发放的额外报酬。记录奖金收入有助于更准确地了解个人财务状况。</p>
+                <h4>近期奖金趋势</h4>
+                <p>在过去的几个月中，奖金收入呈现出波动上升的趋势。这可能与公司业务的增长以及个人在项目中的突出贡献有关。</p>
+
+                <h3>奖金收入信息</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>姓名</th>
+                            <th>奖金金额（元）</th>
+                            <th>奖金来源</th>
+                            <th>获得日期</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="incomeTableBody">
+                        <!-- 表格行将通过JavaScript动态添加 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 编辑模态框 -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">编辑奖金收入记录</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editForm">
+                        <input type="hidden" id="editRowIndex">
+                        <div class="mb-3">
+                            <label for="editName" class="form-label">姓名</label>
+                            <input type="text" id="editName" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editAmount" class="form-label">奖金金额（元）</label>
+                            <input type="number" id="editAmount" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editSource" class="form-label">奖金来源</label>
+                            <input type="text" id="editSource" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editDate" class="form-label">获得日期</label>
+                            <input type="date" id="editDate" class="form-control" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="saveEdit">
+                        <i class="bi bi-check2"></i> 保存编辑
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 删除模态框 -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">删除奖金收入记录</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>你确定要删除这条记录吗？</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-danger" id="confirmDelete">
+                        <i class="bi bi-trash"></i> 确定删除
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 新增奖金收入模态框 -->
+    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel">新增奖金收入</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addForm">
+                        <div class="mb-3">
+                            <label for="addName" class="form-label">姓名</label>
+                            <input type="text" id="addName" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addAmount" class="form-label">奖金金额（元）</label>
+                            <input type="number" id="addAmount" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addSource" class="form-label">奖金来源</label>
+                            <input type="text" id="addSource" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addDate" class="form-label">获得日期</label>
+                            <input type="date" id="addDate" class="form-control" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="saveAdd">
+                        <i class="bi bi-plus-lg"></i> 保存新增
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            // 从本地存储加载数据并显示
+            function loadIncomeRecords() {
+                const incomeRecords = JSON.parse(localStorage.getItem('收入记录')) || [];
+                const tableBody = $('#incomeTableBody');
+                tableBody.empty(); // 清空表格
+                incomeRecords.forEach((record, index) => {
+                    const tr = $('<tr>').append(
+                        $('<td>').text(record.name),
+                        $('<td>').text(record.amount),
+                        $('<td>').text(record.source),
+                        $('<td>').text(record.date),
+                        $('<td>').append(
+                        $('<button>').addClass('btn btn-primary edit-btn').attr('data-row', index).append($('<i class="bi bi-pencil-square"></i>')).append('编辑'),
+                        $('<button>').addClass('btn btn-danger delete-btn').attr('data-row', index).append($('<i class="bi bi-trash"></i>')).append('删除')
+        )
+      );
+          tableBody.append(tr);
+     });
+   }        loadIncomeRecords();
+
+               // 绑定编辑按钮事件
+              $('.edit-btn').click(function () {
+                 const rowIndex = $(this).data('row');
+                 const $row = $('#incomeTableBody tr').eq(rowIndex);
+                 const name = $row.find('td').eq(0).text();
+                 const amount = $row.find('td').eq(1).text();
+                 const source = $row.find('td').eq(2).text();
+                 const date = $row.find('td').eq(3).text();          
+                 $('#editRowIndex').val(rowIndex);
+                 $('#editName').val(name);
+                 $('#editAmount').val(amount);
+                 $('#editSource').val(source);
+                 $('#editDate').val(date);
+                 $('#editModal').modal('show');
+    });
+
+               // 保存编辑按钮事件
+             $('#saveEdit').click(function () {
+                 const rowIndex = parseInt($('#editRowIndex').val());
+                 const name = $('#editName').val();
+                 const amount = parseFloat($('#editAmount').val());
+                 const source = $('#editSource').val();
+                const date = $('#editDate').val();
+                const incomeRecords = JSON.parse(localStorage.getItem('收入记录')) || [];
+                incomeRecords[rowIndex] = { name, amount, source, date };
+                 localStorage.setItem('收入记录', JSON.stringify(incomeRecords));
+
+               $('#editModal').modal('hide');
+               location.reload();
+   });
+
+               // 绑定删除按钮事件
+             $('.delete-btn').click(function () {
+                  const rowIndex = $(this).data('row');
+            $('#deleteModal').data('rowIndex', rowIndex).modal('show');
+   });
+
+         // 确认删除按钮事件
+             $('#confirmDelete').click(function () {
+                  const rowIndex = parseInt($('#deleteModal').data('rowIndex'));
+                  let incomeRecords = JSON.parse(localStorage.getItem('收入记录')) || [];
+                  incomeRecords.splice(rowIndex, 1);
+                  localStorage.setItem('收入记录', JSON.stringify(incomeRecords));
+
+            $('#deleteModal').modal('hide');
+            location.reload();
+});
+
+           // 新增按钮点击事件
+              $('#saveAdd').click(function () {
+                    const name = $('#addName').val();
+                    const amount = parseFloat($('#addAmount').val());
+                    const source = $('#addSource').val();
+                    const date = $('#addDate').val();
+
+                    const incomeRecords = JSON.parse(localStorage.getItem('收入记录')) || [];
+                    incomeRecords.push({ name, amount, source, date });
+                    localStorage.setItem('收入记录', JSON.stringify(incomeRecords));
+
+                    $('#addModal').modal('hide');
+                     location.reload();
+   });
+});
+</script>
+</body>
+</html>

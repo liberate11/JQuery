@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>收支记录列表</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th,
+        table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .btn-back {
+            color: white;
+            background-color: #333;
+            border: none;
+        }
+
+        .btn-back:hover {
+            background-color: #555;
+        }
+
+        h3 {
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-image: linear-gradient(90deg, pink, white);
+            border: burlywood;
+            box-shadow: 5px 5px 5px #888888 inset;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script> 
+</head>
+
+<body>
+    <button type="button" class="btn btn-dark btn-back" onclick="window.location.href='首页.html'">返回首页</button>
+
+    <div class="container mt-3">
+        <div class="card">
+            <div class="card-header">
+                <h3>收支记录列表</h3>
+            </div>
+            <div class="card-body">
+                <h4>收支记录说明</h4>
+                <p>这里展示了您的各项收支记录，有助于您全面了解自己的财务状况。</p>
+
+                <h3>近期收支信息</h3>
+                <table id="recordsTable">
+                    <thead>
+                        <tr>
+                            <th>名字</th>
+                            <th>类型</th>
+                            <th>来源/类别</th>
+                            <th>金额（元）</th>
+                            <th>日期</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 动态添加的记录将显示在这里 -->
+                    </tbody>
+                </table>
+
+                <div id="recordList">
+                    <!-- 动态添加的记录将显示在这里 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            // 模拟数据
+            const incomeRecords = [
+                { 名字: '张三', 类型: '收入', 来源: '工资', 金额: 8000, 日期: '2024-12-01' },
+                { 名字: '王五', 类型: '收入', 来源: '奖金', 金额: 2000, 日期: '2024-12-05' }
+            ];
+            const expenseRecords = [
+                { 名字: '李四', 类型: '支出', 类别: '餐饮', 金额: 200, 日期: '2024-12-03' },
+                { 名字: '小刘', 类型: '支出', 类别: '购物', 金额: 500, 日期: '2024-12-07' }
+            ];
+
+            // 将收入记录添加到表格中
+            incomeRecords.forEach(record => {
+                $('#recordsTable tbody').append(
+                    $('<tr>').append(
+                        $('<td>').text(record.名字),
+                        $('<td>').text(record.类型),
+                        $('<td>').text(record.来源),
+                        $('<td>').text(record.金额),
+                        $('<td>').text(record.日期)
+                    )
+                );
+            });
+
+            // 将支出记录添加到表格中
+            expenseRecords.forEach(record => {
+                $('#recordsTable tbody').append(
+                    $('<tr>').append(
+                        $('<td>').text(record.名字),
+                        $('<td>').text(record.类型),
+                        $('<td>').text(record.类别),
+                        $('<td>').text(record.金额),
+                        $('<td>').text(record.日期)
+                    )
+                );
+            });
+        });
+    </script>
+</body>
+
+</html>
